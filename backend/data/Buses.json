@@ -1,0 +1,20 @@
+[{
+    "Bus_num" : "TNO7CM2026",
+    "Ticket_price" : 690,
+    "Type" : "Delux",
+    "Travels" : "VJ travels",
+    "startpt" : "Vikkaravaandi",
+    "endpt" : "Thalaimai seyalagam", 
+    "no_of_pass" : 1
+
+},
+{
+    "Bus_num" : "KA01HV2025",
+    "Ticket_price" : 1400,
+    "Type" : "executive bus",
+    "Travels" : "kuberan travels",
+    "startpt" : "kumbakonam",
+    "endpt" : "HSR Layout",
+    "no_of_pass" : 1   
+}
+]
