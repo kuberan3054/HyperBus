@@ -24,13 +24,16 @@ const ViewTickets = () => {
                 console.error('Error fetching tickets:', error);
             }
         };
-
+ 
         fetchTickets();
     }, [user_id]);
 
-    const handleCancelTicket = async (ticketId) => {
+    const handleCancelTicket = async (ticket,ticketId) => {
         try {
-            await axios.delete(`http://localhost:8080/user/api/v1/tickets/${ticketId}`); // Adjust the endpoint as needed
+            const bus_id = ticket.Bus_id;
+            const seat_no = ticket.seatNumber;
+            await axios.put(`http://localhost:8080/user/api/v1/update-bus-cancel`, { bus_num: bus_id, seatpos : seat_no });
+            await axios.delete(`http://localhost:8080/user/api/v1/tickets/${ticket._id}`); // Adjust the endpoint as needed
             setTickets(tickets.filter(ticket => ticket._id !== ticketId)); // Remove the ticket from local state
             console.log(`Ticket ${ticketId} canceled successfully.`);
         } catch (error) {
@@ -46,8 +49,8 @@ const ViewTickets = () => {
                 {tickets.length > 0 ? (
                     tickets.map((ticket) => (
                         <li key={ticket._id}>
-                            {ticket.Passenger} - {ticket.date} - {ticket.from} to {ticket.to}
-                            <button onClick={() => handleCancelTicket(ticket._id)} style={{ marginLeft: '10px' }}>
+                            {ticket.Passenger} - {ticket.from} to {ticket.to} 
+                            <button onClick={() => handleCancelTicket(ticket,ticket._id)} style={{ marginLeft: '10px' }}>
                                 Cancel
                             </button>
                         </li>

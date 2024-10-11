@@ -1,14 +1,18 @@
 import './App.css';
 import Home from './components/Home';
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
-import AdminLoginPage from './pages/AdminLogin';
+
 import Booking from './pages/Booking';
 import Signup from './pages/register';
 import Login from './pages/Login';
-import Admin from './pages/Admin';
+import Admin from './pages/Adminadd';
 import TicketBooking from './pages/TicketBooking';
 import { UserProvider } from './pages/UserContext';
 import ViewTickets from './pages/Viewtkt';
+import AdminBus from './pages/AdminBus';
+import AdminHome from './pages/Adminhome';
+import AdminRegister from './pages/AdminRegister';
+
 
 
 
@@ -21,10 +25,12 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/admin' element={<Admin/>}/>
+        <Route path='/admin/add-bus' element={<Admin/>}/>
+        <Route path='/admin' element={<AdminHome/>}/>
+        <Route path='/admin/register' element={<AdminRegister/>}/>
+        <Route path='/admin/admin-inspect' element={<AdminBus/>}/>
         <Route path='/userLogin' element={<Login/>}/>
         <Route path='/signup' element={<Signup/>}/>
-        <Route path='/adminLogin' element={<AdminLoginPage/>}/>
         <Route path='/bookings/:id' element={<Booking/>}/>
         <Route path='/book-now/:id' element={<TicketBooking/>}/>
         <Route path='/view-tkt/:id' element={<ViewTickets/>}/>

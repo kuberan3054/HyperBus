@@ -1,14 +1,14 @@
 const TicketModel = require('../models/Ticketmodel');
-const BusModel = require('../models/Busmodel');
 
 // Function to book a ticket
 exports.getTickets = async (req, res) => {
     try {
-        const { user_id, Passenger, seatNumber, date, from, to } = req.body;
+        const { user_id, Bus_id,Passenger, seatNumber, date, from, to } = req.body;
 
         // Create a new ticket document
         const newTicket = new TicketModel({
             user_id,
+            Bus_id,
             Passenger,
             seatNumber,
             date,
@@ -64,5 +64,21 @@ exports.cancelTicket = async (req, res) => {
     } catch (error) {
         console.error('Error canceling ticket:', error);
         res.status(500).json({ error: 'Failed to cancel ticket' });
+    }
+};
+
+exports.AdmincancelTicket = async (req, res) => {
+    const Bus_num = req.params.id;
+    console.log("BODY : ",Bus_num) 
+    try {
+        const result = await TicketModel.deleteMany({ Bus_id: Bus_num }); 
+        if (result.deletedCount === 0) { 
+            return res.status(404).json({ message: 'No tickets found for the given Bus number' });
+        }
+
+        res.status(200).json({ message: `Successfully canceled ${result.deletedCount} tickets` }); 
+    } catch (error) {
+        console.error('Error canceling tickets:', error);
+        res.status(500).json({ error: 'Failed to cancel tickets' });
     }
 };

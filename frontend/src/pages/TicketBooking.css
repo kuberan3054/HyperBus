@@ -1,0 +1,124 @@
+.ticket-booking {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-booking h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #df27ff;
+}
+
+.ticket-booking form {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-booking .form-group {
+    margin-bottom: 15px;
+}
+
+.ticket-booking label {
+    font-weight: bold;
+    color: #555;
+}
+
+.ticket-booking input[type="text"],
+.ticket-booking input[type="number"],
+.ticket-booking input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.ticket-booking input[type="text"]:focus,
+.ticket-booking input[type="number"]:focus,
+.ticket-booking input[type="date"]:focus {
+    outline: none;
+    border-color: #5cb85c;
+}
+
+.ticket-booking .btn-primary {
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.ticket-booking .btn-primary:hover {
+    background-color: #54007b;
+}
+
+.ticket-booking .seat-map {
+    display: grid;
+    grid-template-columns: repeat(4, auto); /* 4 small squares in each row */
+    gap: 10px; /* Spacing between each seat */
+    row-gap: 20px; /* Add more vertical space between rows */
+    justify-content: center;
+}
+
+.ticket-booking .seat-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.ticket-booking .seat-label.available {
+    background-color: #b3ffb3; /* Green background for available seats */
+}
+
+.ticket-booking .seat-label.unavailable {
+    background-color: #ffb3b3; /* Red background for unavailable seats */
+}
+
+.ticket-booking .seat-info {
+    display: flex;
+    align-items: center;
+}
+
+.ticket-booking .seat-number {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.ticket-booking .add-passenger {
+    display: block;
+    margin-top: 10px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.ticket-booking .add-passenger:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ticket-booking {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .ticket-booking {
+        max-width: 100%;
+    }
+}

@@ -10,15 +10,15 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        const student = await Register.findOne({ email });
+        const passenger = await Register.findOne({ email });
 
-        if (!student) {
-            return res.status(401).json({ message: 'No such student' });
+        if (!passenger) {
+            return res.status(401).json({ message: 'No such passenger' });
         }
-        if (password !== student.password) {
+        if (password !== passenger.password) {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
-        return res.status(200).json({ message: 'Login successful' , identity:student._id, admin:student.admin});
+        return res.status(200).json({ message: 'Login successful' , identity:passenger._id, admin:passenger.admin});
         
     } catch (error) {
         console.error('Login error:', error); 

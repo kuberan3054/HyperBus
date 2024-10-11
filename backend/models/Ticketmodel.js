@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const ticketSChema = new mongoose.Schema({
     user_id : String,
+    Bus_id : String,
     Passenger : String,
     seatNumber : Number,
     date : Date,
@@ -12,4 +13,4 @@ const ticketSChema = new mongoose.Schema({
 
 const TicketModel = mongoose.model('Ticket',ticketSChema);
 
-module.exports = TicketModel;
+module.exports = TicketModel; 

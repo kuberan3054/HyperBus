@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,9 +11,9 @@ import Footer from '../components/Footer';
 
 export default function Signup() {
     const [password, setPassword] = useState('');
-    // const [admin] = useState('no');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); 
+    const navigate = useNavigate(); 
 
     const [registeredData, setRegisteredData] = useState({
         name: '',
@@ -30,13 +30,6 @@ export default function Signup() {
     const handleConfirmPasswordChange = (e) => {
         setConfirmPassword(e.target.value);
     };
-
-    const handleToggle = (e) => {
-        setRegisteredData((prevState) => ({
-          ...prevState,
-          admin: e.target.checked ? 'yes' : 'no'  // 'yes' if checked, otherwise ''
-        }));
-      };
 
 
     const handleInputChange = (e) => {
@@ -55,6 +48,19 @@ export default function Signup() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
+
+    if (registeredData.phoneNumber1.length !== 10) {
+        toast.error("Phone number must be exactly 10 digits.", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+        });
+        return;
+    }
 
         if (!validatePassword()) {
             toast.error("Password must be 8-16 characters and contain at least one number.", {
@@ -97,6 +103,7 @@ export default function Signup() {
                     name: '',
                     phoneNumber1: '',
                     email: '',
+                    password : '',
                 });
             })
             .catch((error) => {
@@ -110,7 +117,7 @@ export default function Signup() {
                     draggable: true,
                 });
             });
-        
+        navigate('/');
         console.log("Registered Data:", registeredData); 
     };
 
@@ -144,7 +151,7 @@ export default function Signup() {
 
                                 <Form.Group as={Row} controlId="formPhone1" className="mt-3">
                                     <Form.Label column md={4}>
-                                        Phone Number 1
+                                        Phone Number 
                                     </Form.Label>
                                     <Col md={8}>
                                         <Form.Control 
@@ -221,16 +228,6 @@ export default function Signup() {
                                         </Button>
                                     </Col>
                                 </Form.Group>
-                                
-                                <Form.Group as={Row} controlId="formadmin" className="mt-3">
-                                    <Form.Check
-                                    type="switch"
-                                    id="custom-switch"
-                                    label="Login as Admin?"
-                                    checked={registeredData.admin === 'yes'}  // Bind the checkbox to state
-                                    onChange={handleToggle}  // Handle toggle changes
-                                    />
-                                </Form.Group>
 
                                 <Button variant="primary" type="submit" className="mt-4 w-100">
                                     Register
@@ -238,7 +235,7 @@ export default function Signup() {
                             </Form>
 
                             <p className="text-center mt-3">
-                                Already a user? <Link to="/userLogin">Login</Link>
+                                Already a user? <Link to="/">Login</Link>
                             </p>
                         </Card>
                     </Col>

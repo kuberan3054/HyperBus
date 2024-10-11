@@ -7,7 +7,7 @@ const BusSchema = new mongoose.Schema({
     Travels : String,
     startpt : String,
     endpt : String,
-    no_of_pass : Number,
+    no_of_pass : [],
     
 });
 

@@ -21,19 +21,15 @@ connectDatabase();
 const user = require('./routes/roles');
 const admin = require('./routes/roles');
 const buses = require('./routes/buses');
-const AdminBuses = require('./routes/adminBuses'); 
 const tickets = require('./routes/tickets');
-const dashboard = require('./routes/dashboard');
 
 app.use(express.json()); 
 app.use('/',user);
 app.use('/',admin);
 app.use('/api/register',registerRoutes);
 app.use('/api/login',loginRoutes);
-app.use('/api/dashboard',dashboard);
 app.use('/user/api/v1/',buses);
 app.use('/user/api/v1',tickets);
-app.use('/admin/api/v1/',AdminBuses);
 
 app.listen(process.env.PORT , ()=>{
     console.log(`Listening to port ${process.env.PORT} in ${process.env.NODE_ENV} `);

@@ -5,9 +5,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 import 'react-toastify/dist/ReactToastify.css';
-import Footer from '../components/Footer';
 import { useUser } from './UserContext'; 
-import Header from '../components/Header';
 
 
 
@@ -18,7 +16,7 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); 
     const navigate = useNavigate(); 
-    const { setUserId } = useUser(); 
+    useUser(); 
 
     
     
@@ -30,17 +28,17 @@ export default function Login() {
         const response = await axios.post('http://localhost:8080/api/login', { email, password });
         console.log(response.data);
         if (response.status === 200) {
-            const studentId = response.data.identity;
+            const passengerId = response.data.identity;
             const isAdmin = response.data.admin;
-            console.log('User ID to Navigate:', studentId); // Debugging output
+            console.log('User ID to Navigate:', passengerId); // Debugging output
 
             if (isAdmin === 'yes') {
                 setTimeout(() => {
-                    navigate(`/admin`);  // Navigate to admin route
+                    navigate(`/admin`);
                 }, 1000);
             } else if (isAdmin === 'no') {
                 setTimeout(() => {
-                    navigate(`/bookings/${studentId}`, { state: { user_id: studentId } });  // Pass user_id in state
+                    navigate(`/bookings/${passengerId}`, { state: { user_id: passengerId } }); 
                 }, 1000);
             }
         }
@@ -89,7 +87,7 @@ export default function Login() {
                                         />
                                     </Col>
                                 </Form.Group>   
-
+                                
                                 <Form.Group as={Row} controlId="formPassword" className="mt-3 position-relative">
                                     <Form.Label column md={4}>Password</Form.Label> 
                                     <Col md={8}>
