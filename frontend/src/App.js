@@ -13,10 +13,6 @@ import AdminBus from './pages/AdminBus';
 import AdminHome from './pages/Adminhome';
 import AdminRegister from './pages/AdminRegister';
 
-
-
-
-
 function App() {
   return (
     <UserProvider>
