@@ -17,7 +17,7 @@ const SuccessPage = () => {
             console.log("checkdata : ", check.data.message);
             if (check.data.message === 'yes') {
                 const response = await axios.post('http://localhost:8080/user/api/v1/book-ticket', { user_id, Bus_id, Passenger, seatNumber, date, from, to });
-                const upd = await axios.put('http://localhost:8080/user/api/v1/update-bus', { Bus_id, seatNumber, date });
+                await axios.put('http://localhost:8080/user/api/v1/update-bus', { Bus_id, seatNumber, date });
                 console.log("Ticket booking response:", response.data);
             }
         } catch (error) {

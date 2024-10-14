@@ -1,4 +1,3 @@
-/* General Styles */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Playfair+Display:wght@400;700&display=swap');
 
 html,
@@ -9,27 +8,27 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    background-color: #e5f2f2; /* Soft powdered blue background */
-    color: #333; /* Dark text color for readability */
+    background-color: #e5f2f2; 
+    color: #333; 
 }
 
 :root {
-    --primary-color: #b0e3e6; /* Powdered blue */
-    --secondary-color: #6d9ba6; /* Muted teal for accents */
-    --accent-color: #005f73; /* Deep teal for buttons and highlights */
+    --primary-color: #b0e3e6; 
+    --secondary-color: #6d9ba6; 
+    --accent-color: #005f73; 
 }
 
 nav {
-    background-color: #021e2c; /* Deep navy */
+    background-color: #021e2c; 
     color: #ffffff;
     text-align: center;
     padding: 1rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-    font-family: 'Playfair Display', serif; /* Classy serif font */
+    font-family: 'Playfair Display', serif; 
 }
 footer {
-    background-color: #9f5ca5c6; /* Dark background */
-    color: #69808f; /* Light gray text color */
+    background-color: #9f5ca5c6; 
+    color: #69808f; 
     padding: 1rem 0;
     text-align: center;
     width: 100%;
@@ -52,7 +51,7 @@ p, label, input, select, textarea, button {
     color: #333;
 }
 
-/* Button Styles */
+
 .btn {
     background-color: var(--primary-color);
     color: var(--accent-color);
@@ -81,7 +80,7 @@ p, label, input, select, textarea, button {
     border-radius: 0.5rem;
 }
 
-/* Ticket Viewing Styles */
+
 ul {
     list-style-type: none;
     padding: 0;
@@ -92,7 +91,7 @@ ul li {
     padding: 1.5rem;
     border: 1px solid var(--secondary-color);
     border-radius: 0.75rem;
-    background-color: #f0f9f9; /* Lightened blue for contrast */
+    background-color: #f0f9f9; 
     color: #005f73;
     display: flex;
     justify-content: space-between;
@@ -115,12 +114,12 @@ button:hover {
     color: #ffffff;
 }
 
-/* Form Styles */
+
 .form-container {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #ffffff; /* White for a clean, modern feel */
+    background-color: #ffffff; 
     border: 1px solid var(--secondary-color);
     border-radius: 12px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
@@ -174,7 +173,49 @@ textarea:focus {
 }
 
 .btn-primary:hover {
-    background-color: #004554; /* Slightly darker accent */
+    background-color: #004554; 
+}
+
+table {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: collapse;
+    margin-bottom: 2rem; 
+}
+
+table, th, td {
+    border: 0px solid #49ffea; 
+}
+
+th, td {
+    padding: 1rem 1.5rem; 
+    text-align: left;
+}
+
+
+td {
+    background-color: transparent; /* No fill for table cells */
+    color: #004554; /* White text color for table cells */
+}
+
+tr:nth-child(even) {
+    background-color: transparent; /* No fill for even rows */
+}
+
+/* Responsive Tables */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px; /* Adjust font size for smaller screens */
+        padding: 0.5rem; /* Adjust padding for smaller screens */
+    }
+}
+
+/* Responsive Tables */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px; /* Adjust font size for smaller screens */
+        padding: 0.5rem; /* Adjust padding for smaller screens */
+    }
 }
 
 /* Responsive adjustments */

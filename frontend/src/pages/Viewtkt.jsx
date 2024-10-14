@@ -10,6 +10,23 @@ const ViewTickets = () => {
     const [tickets, setTickets] = useState([]);
     console.log('User ID:', user_id);
 
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' }; // Customize the date format
+        const date = new Date(dateString);
+    
+        // Format the time to be in AM/PM format
+        let hours = date.getHours();
+        const minutes = date.getMinutes().toString().padStart(2, '0'); // Add leading zero to minutes if needed
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12; // Convert to 12-hour format, 0 becomes 12
+    
+        const timeString = `${hours}:${minutes} ${ampm}`;
+    
+        // Combine formatted date and time
+        return `${date.toLocaleDateString(undefined, options)} at ${timeString}`;
+    };
+    
+
     useEffect(() => {
         const fetchTickets = async () => {
             if (!user_id) {
@@ -62,7 +79,7 @@ const ViewTickets = () => {
                 {uniqueTickets.length > 0 ? (
                     uniqueTickets.map((ticket) => (
                         <li key={ticket._id}>
-                            {ticket.Passenger} - {ticket.from} to {ticket.to}
+                            {ticket.Passenger} - {ticket.from} to {ticket.to} - {formatDate(ticket.date)}
                             <button onClick={() => handleCancelTicket(ticket, ticket._id)} style={{ marginLeft: '10px' }}>
                                 Cancel
                             </button>

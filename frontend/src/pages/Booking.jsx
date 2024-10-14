@@ -23,6 +23,23 @@ function Booking() {
     navigate(`/`);
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' }; // Customize the date format
+    const date = new Date(dateString);
+
+    // Format the time to be in AM/PM format
+    let hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0'); // Add leading zero to minutes if needed
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12; // Convert to 12-hour format, 0 becomes 12
+
+    const timeString = `${hours}:${minutes} ${ampm}`;
+
+    // Combine formatted date and time
+    return `${date.toLocaleDateString(undefined, options)} at ${timeString}`;
+};
+
+
   const handleTktClick = () => {
     navigate(`/view-tkt/${user_id}`, { state: { Uid: user_id } });
   };
@@ -100,7 +117,7 @@ function Booking() {
                   <button onClick={() => handleBusClick(bus)}>{bus.Travels}</button>
                 </td>
                 <td>{bus.Type}</td>
-                <td>{bus.date}</td>
+                <td>{formatDate(bus.date)}</td>
                 <td>₹{bus.Ticket_price}</td>
               </tr>
             ))}

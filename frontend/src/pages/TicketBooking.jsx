@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
 import './TicketBooking.css'; 
@@ -9,13 +9,11 @@ function TicketBooking() {
     const location = useLocation();
     const { selectedBus } = location.state || {}; 
     const user_id = location.state?.Uid;
-    const navigate = useNavigate();
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [passengerDetails, setPassengerDetails] = useState({});
-    const [ticketPrice, setTicketPrice] = useState(selectedBus ? selectedBus.Ticket_price : 0);
+    const [ticketPrice] = useState(selectedBus ? selectedBus.Ticket_price : 0);
     const [availableSeats, setAvailableSeats] = useState([]);
-    const [tickets, setTickets] = useState([]); // To store ticket data
-
+    
     useEffect(() => {
         if (selectedBus && selectedBus.no_of_pass) {
             const seatsArray = Array.from({ length: selectedBus.no_of_pass.length }, (_, index) => ({
