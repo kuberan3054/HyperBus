@@ -20,9 +20,9 @@ const AdminBus = () => {
         fetchBuses();
     }, []);
 
-    const handleResetSeats = async (bus_num) => {
+    const handleResetSeats = async (bus_num,date) => {
         try {
-            await axios.put(`http://localhost:8080/user/api/v1/buses/${bus_num}/reset`, { Bus_num: bus_num });
+            await axios.put(`http://localhost:8080/user/api/v1/buses/${bus_num}/reset`, { Bus_num: bus_num , date : date });
             await axios.delete(`http://localhost:8080/user/api/v1/tickets/admin-del/${bus_num}`);
             // Refresh the buses list after reset
             const response = await axios.get('http://localhost:8080/user/api/v1/buses');
@@ -72,10 +72,12 @@ const AdminBus = () => {
                         {buses.map((bus) => (
                             <li key={bus._id} className="bus-item">
                                 <h3>{bus.Travels}</h3>
-                                <p>Type: {bus.Type}</p>
+                                <p>Date: {formatDate(bus.date)}</p>
                                 <p>Route: {bus.startpt} to {bus.endpt}</p>
-                                <button className="action-button" onClick={() => handleResetSeats(bus.Bus_num)}>Reset Seats</button>
-                                <button className="action-button" onClick={() => handleViewTickets(bus)}>View Tickets</button>
+                                <div className="button-container">
+                                <button className="reset-button" onClick={() => handleResetSeats(bus.Bus_num,bus.date)}>Reset Seats</button>
+                                <button className="view-tickets-button" onClick={() => handleViewTickets(bus)}>View Tickets</button>
+                                </div>
                             </li>
                         ))}
                     </ul>

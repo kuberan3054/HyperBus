@@ -7,19 +7,19 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    background-color: #9d00ff; /* Dark background color */
-    color: #0f360e; /* White text color */
+    background-color: #fbfea9; /* Dark background color */
+    color: #000000; /* White text color */
 }
 
 :root {
     --primary-color: #fdb8b8; /* White */
-    --secondary-color: #49ffea; /* Aqua */
+    --secondary-color: #5c47ff; /* Aqua */
     --gray-color: #9cbbce; /* Light gray */
 }
 
 nav {
-    background-color: #1a1a1a; /* Dark background for navigation */
-    color: #ffffff; /* White text color */
+    background-color: #5c47ff; /* Dark background for navigation */
+    color: #000000; /* White text color */
     text-align: center;
     padding: 1rem 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -417,4 +417,40 @@ textarea:focus {
 
 .back-button:hover {
     background-color: #555;
+}
+
+/* Container for the buttons */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Reset button */
+.reset-button {
+    background-color: #ffbe33;
+    color: #0b0b0b;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 8px;
+}
+
+/* View Tickets button pinned to the right */
+.view-tickets-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto; /* Ensures it is pinned to the right */
+}
+
+.button-container button:hover {
+    opacity: 0.9;
 }

@@ -8,9 +8,10 @@ const BusSchema = new mongoose.Schema({
     startpt : String,
     endpt : String,
     no_of_pass : [],
-    
+    date: Date, 
+     
 });
 
 const BusModel = mongoose.model('Bus',BusSchema);
 
-module.exports = BusModel;
+module.exports = BusModel; 

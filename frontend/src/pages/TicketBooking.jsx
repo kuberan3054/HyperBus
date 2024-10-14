@@ -1,46 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
 import './TicketBooking.css'; 
+import { loadStripe } from '@stripe/stripe-js';
 
 function TicketBooking() {
     const location = useLocation();
     const { selectedBus } = location.state || {}; 
-
-    const [selectedSeats, setSelectedSeats] = useState([]); // For managing selected seats
+    const user_id = location.state?.Uid;
+    const navigate = useNavigate();
+    const [selectedSeats, setSelectedSeats] = useState([]);
     const [passengerDetails, setPassengerDetails] = useState({});
     const [ticketPrice, setTicketPrice] = useState(selectedBus ? selectedBus.Ticket_price : 0);
     const [availableSeats, setAvailableSeats] = useState([]);
+    const [tickets, setTickets] = useState([]); // To store ticket data
 
     useEffect(() => {
         if (selectedBus && selectedBus.no_of_pass) {
             const seatsArray = Array.from({ length: selectedBus.no_of_pass.length }, (_, index) => ({
                 id: index + 1,
-                available: selectedBus.no_of_pass[index] === 1 // Check if seat is available based on no_of_pass array
+                available: selectedBus.no_of_pass[index] === 1
             }));
             setAvailableSeats(seatsArray);
         }
     }, [selectedBus]);
 
-    // Handle seat selection
     const handleSeatSelection = (e, seatId) => {
         const checked = e.target.checked;
         if (checked) {
             setSelectedSeats((prev) => [...prev, seatId]);
             setPassengerDetails((prev) => ({
                 ...prev,
-                [seatId]: { name: '', age: '', gender: '' } // Initialize passenger details for the seat
+                [seatId]: { name: '', age: '', gender: '' }
             }));
         } else {
             setSelectedSeats((prev) => prev.filter(seat => seat !== seatId));
             const newPassengerDetails = { ...passengerDetails };
             delete newPassengerDetails[seatId];
-            setPassengerDetails(newPassengerDetails); // Remove passenger details for unchecked seat
+            setPassengerDetails(newPassengerDetails);
         }
     };
 
-    // Handle input changes for each passenger form
     const handleInputChange = (seatId, field, value) => {
         setPassengerDetails((prev) => ({
             ...prev,
@@ -53,35 +54,58 @@ function TicketBooking() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            // Iterate over selectedSeats and submit form data for each selected seat
-            for (let seatId of selectedSeats) {
-                const passenger = passengerDetails[seatId];
-                const ticketData = {
-                    user_id: location.state.Uid,
-                    Bus_id: selectedBus.Bus_num,
-                    Passenger: passenger.name,
-                    Age: passenger.age,
-                    Gender: passenger.gender,
-                    seatNumber: seatId,
-                    date: new Date(), // You can pass the date from a state as per your logic
-                    from: selectedBus.startpt,
-                    to: selectedBus.endpt
-                };
+        const stripe = await loadStripe("pk_test_51Q8Y4kRsqhDc2VKg1ADJXsjyAJ4rYPralsBDABu9drbGHa0qOy5cDorcEHNXEuawzCilX04lRmvo9QE4UTyZJAnq00L7uoGoWO");
+        const price = ticketPrice * selectedSeats.length;
+        
+        // Prepare ticket data for the checkout request
+        const ticketData = selectedSeats.map(seatId => ({
+            user_id: user_id,
+            Bus_id: selectedBus.Bus_num,
+            Passenger: passengerDetails[seatId].name,
+            Age: passengerDetails[seatId].age,
+            Gender: passengerDetails[seatId].gender,
+            seatNumber: seatId,
+            date: selectedBus.date,
+            from: selectedBus.startpt,
+            to: selectedBus.endpt,
+        }));
 
-                // Send ticket data to the server
-                await axios.post('http://localhost:8080/user/api/v1/book-ticket', ticketData);
-                console.log(`Ticket for seat ${seatId} booked successfully`);
+        try {
+            // Step 1: Initiate payment
+            const checkoutResponse = await axios.post('http://localhost:8080/user/api/v1/checkout', { price, ticketData ,user_id});
+            const sessionId = checkoutResponse.data.id;
+
+            // Step 2: Redirect to Stripe checkout
+            const { error } = await stripe.redirectToCheckout({ sessionId });
+
+            // If there was an error with the checkout, handle it here
+            if (error) {
+                console.error('Payment failed:', error);
+                alert('Payment failed: ' + error.message);
+                return; // Exit the function without booking tickets
             }
 
-            alert('Ticket(s) booked successfully!');
-            setSelectedSeats([]); // Reset seat selection
-            setPassengerDetails({}); // Clear passenger details
+            // If payment is successful, navigate with the ticket details
+            //navigate(`/bookings/${user_id}?status=success&tickets=${JSON.stringify(ticketData)}`);
+
         } catch (error) {
-            console.error('Error booking ticket:', error);
-            alert('Failed to book ticket');
+            console.error('Error during checkout:', error);
+            alert('Failed to initiate payment or booking');
         }
     };
+
+    // In your TicketBooking component, add this logic in useEffect
+useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const status = query.get('status');
+    const ticketData = query.get('ticketData');
+
+    if (status === 'success' && ticketData) {
+        // Make a request to finalize the booking
+        
+    }
+}, []);
+
 
     if (!selectedBus) {
         return <h2>No bus selected</h2>;
@@ -94,7 +118,6 @@ function TicketBooking() {
                 <h2>Book Your Ticket for Bus: {selectedBus.Travels}</h2>
 
                 <form onSubmit={handleSubmit}>
-                    {/* Seat Map */}
                     <div className="seat-map">
                         {availableSeats.map(seat => (
                             <label key={seat.id} className={`seat-label ${seat.available ? 'available' : 'unavailable'}`}>
@@ -114,7 +137,6 @@ function TicketBooking() {
                         ))}
                     </div>
 
-                    {/* Passenger Forms */}
                     {selectedSeats.map(seatId => (
                         <div key={seatId} className="passenger-form">
                             <legend>Passenger details for seat: {seatId}</legend>

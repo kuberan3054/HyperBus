@@ -12,6 +12,8 @@ import ViewTickets from './pages/Viewtkt';
 import AdminBus from './pages/AdminBus';
 import AdminHome from './pages/Adminhome';
 import AdminRegister from './pages/AdminRegister';
+import SuccessPage from './pages/success';
+import FailurePage from './pages/failure';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home/>}/>
+        <Route path='/success/:id' element={<SuccessPage/>}/>
+        <Route path='/failure' element={<FailurePage/>}/>
         <Route path='/admin/add-bus' element={<Admin/>}/>
         <Route path='/admin' element={<AdminHome/>}/>
         <Route path='/admin/register' element={<AdminRegister/>}/>

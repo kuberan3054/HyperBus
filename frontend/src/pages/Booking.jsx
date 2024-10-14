@@ -7,16 +7,20 @@ import Footer from '../components/Footer';
 function Booking() {
   const [buses, setBuses] = useState([]);
   const [from, setFrom] = useState('');
+  const [date, setDate] = useState('');
   const [to, setTo] = useState('');
-  const [searched, setSearched] = useState(false); // Track if search has been performed
+  const [searched, setSearched] = useState(false); 
   const navigate = useNavigate();
   const location = useLocation();
   const user_id = location.state?.user_id;
-
-  console.log('User ID:', user_id);
+  
 
   const handleBusClick = (bus) => {
     navigate(`/book-now/${user_id}`, { state: { selectedBus: bus, Uid: user_id } });
+  };
+
+  const handleBack = () => {
+    navigate(`/`);
   };
 
   const handleTktClick = () => {
@@ -25,14 +29,14 @@ function Booking() {
  
   const handleSearch = async () => {
     try {
-      console.log(from);
-      const response = await axios.post('http://localhost:8080/user/api/v1/findbuses',{ start: from, end: to });
+      console.log("Date is : ",date);
+      const response = await axios.post('http://localhost:8080/user/api/v1/findbuses',{ start: from, end: to , date : date});
       console.log(response);
       if (response.data.bus.length === 0) {
         console.log('No buses found for the selected route.');
       }
       setBuses(response.data.bus);
-      setSearched(true); // Set searched to true after successful search
+      setSearched(true); 
     } catch (error) {
       console.error('Error searching buses:', error);
       setBuses([]); // Reset buses state on error
@@ -45,6 +49,8 @@ function Booking() {
       console.log('No buses available for the selected route.');
     }
   }, [searched, buses]);
+
+  
 
   return (
     <div>
@@ -64,8 +70,18 @@ function Booking() {
         onChange={(e) => setTo(e.target.value)}
         style={{ width: '150px', marginRight: '10px' }}
     />
+    <input
+        type='date'
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+        style={{ width: '150px', marginRight: '10px' }}
+    />
     <button onClick={handleSearch}>Search</button>
 </nav>
+<button onClick={handleBack} style={{ marginRight: '1200px' }}>
+        Back
+    </button>
+
 <button onClick={handleTktClick} style={{ marginLeft: '1200px' }}>
         View Booked Tickets
     </button>
@@ -84,6 +100,7 @@ function Booking() {
                   <button onClick={() => handleBusClick(bus)}>{bus.Travels}</button>
                 </td>
                 <td>{bus.Type}</td>
+                <td>{bus.date}</td>
                 <td>₹{bus.Ticket_price}</td>
               </tr>
             ))}
