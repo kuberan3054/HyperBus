@@ -14,6 +14,7 @@ import AdminHome from './pages/Adminhome';
 import AdminRegister from './pages/AdminRegister';
 import SuccessPage from './pages/success';
 import FailurePage from './pages/failure';
+import DriverOnboard from './pages/DriverOnboard';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/success/:id' element={<SuccessPage/>}/>
         <Route path='/failure' element={<FailurePage/>}/>
         <Route path='/admin/add-bus' element={<Admin/>}/>
+        <Route path='/admin/driver-onboard' element={<DriverOnboard/>}/>
         <Route path='/admin' element={<AdminHome/>}/>
         <Route path='/admin/register' element={<AdminRegister/>}/>
         <Route path='/admin/admin-inspect' element={<AdminBus/>}/>

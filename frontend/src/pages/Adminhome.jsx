@@ -17,6 +17,7 @@ const AdminHome = () => {
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
                 <Link to="/admin/add-bus" className="btn btn-primary mr-4" >Add Bus</Link>
+                <Link to="/admin/driver-onboard" className="btn btn-primary mr-4" >Driver Onboarding</Link>
                 <Link to="/admin/register" className="btn btn-primary mr-4" >Add Admin</Link>
                 <Link to="/admin/admin-inspect" className="btn btn-primary" >Admin Inspect</Link>
             </div>

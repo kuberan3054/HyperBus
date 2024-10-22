@@ -117,8 +117,8 @@ const AddBus = () => {
                             name="Ticket_price"
                             value={busData.Ticket_price}
                             onChange={handleInputChange}
-                            required
                             min="100"
+                            required
                         />
                     </div>
 
